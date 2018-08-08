@@ -1,0 +1,55 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<odoo>
+
+	<record id="view_pack_tree" model="ir.ui.view">
+	   <field name="name">pack.details.tree</field>
+	   <field name="model">pack.details</field>
+	   <field name="priority">2</field>
+	   <field name="arch" type="xml">
+	    <tree string="Pack">
+	     <field name="name"/>
+	    <!--  <field  name="price"/> -->
+	     <field name="Product_id"/>
+	     
+			     
+	    </tree>
+	   </field>
+        </record>
+
+
+        <record id="view_pack_form" model="ir.ui.view">
+	   <field name="name">pack.details.form</field>
+	   <field name="model">pack.details</field>
+	   <field name="priority">2</field>
+	   <field name="arch" type="xml">
+	    <form string="Pack">
+
+	    	<sheet>
+		    	<group col='4' clospan='2'>
+			    <field name="name"/>
+	     		<field  name="price"/>
+	     		<field name="qua"/>
+	     		<!-- <field name='dis'/> -->
+	     		<field name="Product_id" invisible='True'/></group>
+			     
+			     
+	     </sheet>
+	 </form>
+	</field>
+</record>
+	  <record id="action_pack" model="ir.actions.act_window">
+	  <field name="name">Pack</field>
+	  <field name="type">ir.actions.act_window</field>
+	  <field name="res_model">pack.details</field>
+	  <field name="view_type">form</field>
+	  <field name="view_mode">tree,form,kanban</field>
+	  <field name="help" type="html">
+	   <p class="oe_view_nocontent_create"> </p>
+	   <p></p>
+	  </field>
+	</record>
+	
+	
+
+
+</odoo>

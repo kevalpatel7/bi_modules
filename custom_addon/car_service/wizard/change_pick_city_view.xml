@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_change_pick_city" model="ir.ui.view">
+            <field name="name">Change Pick City</field>
+            <field name="model">change.pick.city</field>
+            <field name="arch" type="xml">
+                <form string="Change Pick City">
+                    <p class="oe_grey">
+                        
+                    </p>
+                    <group>
+                        <field name="pick_city"/>
+                    </group>
+                    <footer>
+                        <button name="change_city" string="Change Pick City" type="object"
+                            class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_change_pick_city" model="ir.actions.act_window">
+            <field name="name">Change Pick City</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">change.pick.city</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+</odoo>

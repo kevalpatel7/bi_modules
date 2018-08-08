@@ -1,0 +1,53 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<odoo>
+
+	<record id="view_bike_tree" model="ir.ui.view">
+	   <field name="name">bike.product.tree</field>
+	   <field name="model">bike.product</field>
+	   <field name="priority">2</field>
+	   <field name="arch" type="xml">
+	    <tree string="bike">
+	     <field name="name"/>
+	     
+	     <field name="rent"/>
+	     
+			     
+	    </tree>
+	   </field>
+        </record>
+
+
+        <record id="view_bike_form" model="ir.ui.view">
+	   <field name="name">bike.product.form</field>
+	   <field name="model">bike.product</field>
+	   <field name="priority">2</field>
+	   <field name="arch" type="xml">
+	    <form string="RENT">
+
+	    	<sheet>
+		    	<group col='4' clospan='2'>
+			    <field name="name"/>
+			     
+			     <field name="rent"/></group>
+			     <group><field name='num_plate'/></group>
+			     
+	     </sheet>
+	 </form>
+	</field>
+</record>
+	  <record id="action_bike" model="ir.actions.act_window">
+	  <field name="name">bike</field>
+	  <field name="type">ir.actions.act_window</field>
+	  <field name="res_model">bike.product</field>
+	  <field name="view_type">form</field>
+	  <field name="view_mode">tree,form,kanban</field>
+	  <field name="help" type="html">
+	   <p class="oe_view_nocontent_create"> </p>
+	   <p></p>
+	  </field>
+	</record>
+	
+	<menuitem action="action_bike" id="menu_bike" parent="sub_menu_carservice_rent" name="Bike" sequence="29"/>
+
+
+</odoo>

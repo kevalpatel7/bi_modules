@@ -1,0 +1,160 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<odoo>
+	<record id="view_carservice_module_tree" model="ir.ui.view">
+	   <field name="name">customer.details.tree</field>
+	   <field name="model">customer.details</field>
+	   <field name="priority">16</field>
+	   <field name="arch" type="xml">
+	    <tree string="customer">
+	     <field name="name"/>
+	     <field name="phone"/>
+	     <field name='name_seq' />
+	     <field name="city"/>
+	     <field name="date1"/>
+	     <field name="urgent"/>
+	     <field name="vehical"/>
+	    </tree>
+	   </field>
+        </record> 
+        <record id="view_carservice_module_graph" model="ir.ui.view">
+	   <field name="name">customer.details.graph</field>
+	   <field name="model">customer.details</field>
+	   <field name="priority">16</field>
+	   <field name="arch" type="xml">
+	    <graph string="customer" type="bar" stacked="1">
+	     <field name="name"/>
+	     <field name="phone"/>
+	     
+	     <field name="city"/>
+	     <field name="date1"/>
+	     <field name="urgent"/>
+	     <field name="vehical"/>
+	    </graph>
+	   </field>
+        </record> 
+
+          <record id="view_carservice_module_calendar" model="ir.ui.view">
+	   <field name="name">customer.details.calendar</field>
+	   <field name="model">customer.details</field>
+	   <field name="priority">16</field>
+	   <field name="arch" type="xml">
+	    <calendar string="customer" type="bar" stacked="1">
+	     <field name="name"/>
+	     <field name="phone"/>
+	     <field name='name_seq'/>
+	     <field name="city"/>
+	     <field name="date1"/>
+	     <field name="urgent"/>
+	     <field name="vehical"/>
+	    </calendar>
+	   </field>
+        </record> 
+        <record id="seq_customer" model="ir.sequence">
+            <field name="name">customer_sequencer</field>
+            <field name="code">customer.details</field>
+            <field name="prefix">CU</field>
+            <field name="padding">3</field>
+        </record>
+	<record id="view_carservies_module_form" model="ir.ui.view">
+	   <field name="name">customer.details.form</field>
+	   <field name="model">customer.details</field>
+	   <field name="arch" type="xml">
+	    <form string="customer" class="customer_detail" >
+
+	    <header>
+                    <button name="action_urgent"  type="object"   string="done" class="oe_highlight" attrs="{'invisible': [('state', '=', 'done')]}" />
+                    <button name="action_confirm" type="object" string="confirm" />
+
+                    <field name="state" widget="statusbar" statusbar_visible="urgent,not,done"/>
+
+                </header>
+
+	    <sheet>
+	    <h1> <field name='name_seq' />
+		<field name="name"  attrs="{'readonly': [('state', '=', 'done')]}"/></h1>     
+		  <group>
+			
+		   	 <group>
+		   	 	<field name="phone" colspan='2' attrs="{'readonly': [('state', '=', 'done')]}" /> </group>
+		   	 <group>	<field name='photo' widget='image'  /></group>
+		   	
+		   	</group>
+		   
+		   
+		<group >
+			<group>
+
+				<field name="city"  attrs="{'readonly': [('state', '=', 'done')]}" widget="radio"/>
+			</group>
+			<group>
+				<field name="urgent"  attrs="{'readonly': [('state', '=', 'done')]}"/>
+			</group>
+			 <group >
+		   
+		  		 <field name="vehical"  attrs="{'readonly': [('state', '=', 'done')]}"/>
+			 </group>
+			
+
+		 </group>
+
+		
+		 <group>
+			<group>
+				<field name='Days'  attrs="{'readonly': [('state', '=', 'done')]}"/>
+				<field name="date1"  attrs="{'readonly': [('state', '=', 'done')]}"/>
+				
+			</group>
+			<group>
+				
+				<field name='return_date'  attrs="{'readonly': [('state', '=', 'done')]}"/>
+			</group>
+			
+		 </group>
+	    </sheet> 
+	    </form> 
+	   </field> 
+	</record> 
+
+	<record id="search_customer_id" model="ir.ui.view">
+		<field name="name">customer.details.search</field>
+		<field name="model">customer.details</field>
+		<field name="arch" type="xml">
+			<search string="Customer">
+				<filter string="Ahmedabad" name="Ahmedabad" domain="[('city','=','a')]"/>
+				<filter string='Delhi' name="Delhi" domain="[('city','=','d')]"/>
+				<filter string='Goa' name="Goa"	domain="[('city','=','g')]"/>
+				
+
+				<group expand="0" name="group_by" string="Group By">
+					<filter string="City" name="City" context="{'group_by' : 'city'}"/></group>
+			</search>
+		</field>
+	</record>
+
+	<record id="action_car_customer" model="ir.actions.act_window">
+	  <field name="name">Customer</field>
+	  <field name="type">ir.actions.act_window</field>
+	  <field name="res_model">customer.details</field>
+	  <field name="view_type">form</field>
+	  <field name="view_mode">tree,form,kanban,graph</field>
+	  <field name="help" type="html">
+	   <p class="oe_view_nocontent_create	"> </p>
+	   <p></p>
+	  </field>
+	</record>
+
+
+	<menuitem id="main_menu_carservice" name="Car service" sequence="25" />
+	<menuitem id="sub_menu_carservice_customer" name="Customer"  parent="main_menu_carservice" sequence="0"/>
+	<menuitem id="sub_menu_carservice_parts" name='Parts' parent="main_menu_carservice" sequence='2'/>
+	<menuitem id="sub_menu_carservice_staff" name='Staff' parent="main_menu_carservice" sequence='3'/>
+	<menuitem id="sub_menu_carservice_rent" name='Rent' parent="main_menu_carservice" sequence='4'/>
+	<menuitem id="sub_menu_carservice_parts_garage" name='Car service' parent="main_menu_carservice" sequence='1'/>
+	<menuitem action="action_car_customer" id="menu_carservice_module2" parent="sub_menu_carservice_customer" name="Customer" sequence="1"/>
+               
+
+
+
+
+
+</odoo>

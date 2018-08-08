@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_bundle" model="ir.ui.view">
+            <field name="name">Bundle.pack</field>
+            <field name="model">bundle.pack</field>
+            <field name="arch" type="xml">
+                <form string="Bundle">
+                    <p class="oe_grey">
+                        
+                    </p>
+                   <!-- <field name='bundle'/> -->
+             <group string="Bundle name"   >   <field name='name' domain="[('is_pack','=',True)]"/></group>
+                  <!--  <field name='is_pack'/> -->
+              <group string='Qty'>    <field name='Qty'/> </group>
+               <group string='Bundle product'>   <field name='product'>
+                        <tree editable='bottom' delete='false' create='false'>
+                            <field name="name" />
+                           <!--  <field name="price"/> -->
+                            <field name="qua"/>
+                            <!-- <field name="dis"/> -->
+                        </tree>
+                    </field></group>
+
+                    
+                   <!-- <field name='bill'/> -->
+                    <footer>
+                        <button name="add_bundle" string="add bundle" type="object"
+                            class="btn-primary"/>
+                        <!-- <button string="Cancel" class="btn-default" special="cancel"/> -->
+                    </footer> 
+                </form>
+            </field>
+        </record>
+
+        <record id="action_bundle" model="ir.actions.act_window">
+            <field name="name">Bundle</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bundle.pack</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+
+</odoo>

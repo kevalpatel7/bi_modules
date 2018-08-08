@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_change_parts" model="ir.ui.view">
+            <field name="name">Change parts</field>
+            <field name="model">change.parts</field>
+            <field name="arch" type="xml">
+                <form string="Change parts">
+                    <p class="oe_grey">
+                        
+                    </p>
+                    <group>
+                   <field name="parts_c">
+                     <tree editable='bottom' delete='false' >
+                        <field name='name'  />
+                        <field name='price' />
+                    </tree>
+                </field>
+                    </group>
+                    <footer>
+                        <button name="change_parts" string="Change parts" type="object"
+                            class="btn-primary"/>
+                        <!-- <button string="Cancel" class="btn-default" special="cancel"/> -->
+                    </footer> 
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_change_parts" model="ir.actions.act_window">
+            <field name="name">Change Parts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">change.parts</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+
+</odoo>

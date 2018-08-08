@@ -1,0 +1,50 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<odoo>
+	<record id="view_create_part_tree" model="ir.ui.view">
+	   <field name="name">create.parts.tree</field>
+	   <field name="model">create.parts</field>
+	   <field name="priority">2</field>
+	   <field name="arch" type="xml">
+	    <tree string="Parts">
+	     <field name="name"/>
+	     
+	     <field name="price"/>
+	     
+	     
+	    </tree>
+	   </field>
+        </record> 
+        <record id="view_create_part_form" model="ir.ui.view">
+	   <field name="name">create.parts.form</field>
+	   <field name="model">create.parts</field>
+	   <field name="arch" type="xml">
+	    <form string="parts" class="parts_detail">
+	    	
+	     <sheet>     
+		<group>
+			<group>
+		   <field name="name"/>
+		   <field name="price" />
+		   </group>
+		  </group>
+		
+		
+	     </sheet> 
+	    </form> 
+	   </field> 
+	</record> 
+	<record id="action_part_create" model="ir.actions.act_window">
+	  <field name="name">Create parts</field>
+	  <field name="type">ir.actions.act_window</field>
+	  <field name="res_model">create.parts</field>
+	  <field name="view_type">form</field>
+	  <field name="view_mode">tree,form,kanban</field>
+	  <field name="help" type="html">
+	   <p class="oe_view_nocontent_create"> </p>
+	   <p></p>
+	  </field>
+	</record>
+	
+	<menuitem action="action_part_create" id="menu_create_part3" parent="sub_menu_carservice_parts" name="Create parts" sequence="2"/>
+
+</odoo>

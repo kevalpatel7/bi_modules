@@ -1,0 +1,156 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<odoo>
+	<record id="view_carmech_module_tree" model="ir.ui.view">
+	   <field name="name">mech.details.tree</field>
+	   <field name="model">mech.details</field>
+	   <field name="priority">1</field>
+	   <field name="arch" type="xml">
+	    <tree string=" garage" >
+	     <field name="name"/>
+	     <field name="mech_ids"/>
+
+	     
+	     
+	     <field name='damage'/>
+	     <field name='vehical'/>
+	     
+		 <field name='parts'  />
+
+	     <field name="garage_ids" string="garageeeeeeeeeeeeeee" widget="many2many_tags" 
+	     	 />
+	     
+	     
+	    </tree>
+	   </field>
+        </record> 
+	<record id="view_carmech_module_form" model="ir.ui.view">
+	   <field name="name">mech.details.form</field>
+	   <field name="model">mech.details</field>
+	   <field name="arch" type="xml">
+	    <form string="garage" class="mech_detail">
+                <header>
+                    <button name="action_cancel" type="object" string="Cancel" class="btn-primary" attrs="{'invisible': [('state', '=', 'done')]}"/>
+                    <button name="action_confirm" type="object" string="confirm" class='btn-primary'/>
+                    <button name="%(action_view_change_parts)d" string="Change Parts"
+                    	type="action" class="btn-primary"/>
+
+                    <field name="state" widget="statusbar" statusbar_visible="cancel,done"/>
+                </header>
+         
+	     <sheet>
+	     	<!-- <field name="mech_ids" widget="many2many_checkboxes" string='Select Service'/> -->
+		<group>
+			
+		   		<group><field name="mech_ids" widget="many2many_tags"/></group>
+		   		<group><field name='customer'/></group>
+		   		 <group><field name='damage'/></group>
+		   		 <!-- <group><field name='describe' attrs="{'invisible':[('damage','=','no')]}"/> -->
+		   		<!-- </group> -->
+		   		
+		   	
+		   	<group>
+		   		<field name="name" attrs="{'readonly': [('state', '=', 'done')]}"/>
+		   	</group>
+		   
+		</group>
+		<group>
+		   
+		  
+		   <group col='4' colspan='2'>
+		   		<field name='vehical' attrs="{'readonly': [('state', '=', 'done')]}"/>
+		   		<!-- <field name='engine'  attrs="{'readonly': [('state', '=', 'done')],'invisible':[('vehical','=','b')]}" /> -->
+		   		<field name='vehicals'	attrs="{'readonly': [('state', '=', 'done')]}"/>
+		   </group>
+		</group>
+		
+
+		   
+		   	
+		 <group>
+		  	
+		 </group>
+		 <notebook >
+		 <page string='Parts' attrs="{'invisible':[('damage','=','no')]}" >
+
+			<group string="Parts Line" >
+		   		<field name='parts' attrs="{'readonly': [('state', '=', 'done')]}" >
+		   			<tree editable='bottom' >
+		   				<field name='name'  />
+		   				<field name='price' sum='Parts price' />
+		   			</tree>
+		   		</field>
+		   	</group>
+		   </page>
+		   <page string='Bill'>
+		   			<group col='4' colspan='2'>
+		   		<field name='payment' attrs="{'readonly': [('state', '=', 'done')]}"/>
+		   		<field name='bill' attrs="{'readonly': [('state', '=', 'done')]}"/>
+		   		<field name="garage_ids" widget="many2many_checkboxes" options="{'no_open':True,'no_create':True,'no_create_edit':True}" attrs="{'readonly': [('state', '=', 'done')]}"/>
+		   	</group>
+
+
+		   </page>
+		   <page string='Describe damage' attrs="{'invisible':[('damage','=','no')]}">
+		   	<field name='describe'/>
+		   </page>
+		   <page string = 'Modifying parts' attrs="{'invisible':['!',('mech_ids','ilike','Modify')]}">
+		   </page>
+
+
+		</notebook>
+		   
+		
+	     </sheet> 
+	
+	    </form> 
+	   </field> 
+	</record> 
+	<record id="search_mech_id" model="ir.ui.view">
+		<field name="name">mech.details.search</field>
+		<field name="model">mech.details</field>
+		<field name="arch" type="xml">
+			<search string="Search Service">
+				<filter string="Damaged" name="damage" domain="[('damage','=','yes')]"/>
+				<filter string='Engine' name="Engine" domain="[('parts.name.name','=','Engine')]"/>
+				<filter string='4 wheeler' name="cars"	domain="[('vehical','=','c')]"/>
+				<filter string='2 wheeler' name="bikes"	domain="[('vehical','=','b')]"/>
+
+				<group expand="0" name="group_by" string="Group By">
+					<filter string="Damaged" name="damage" context="{'group_by' : 'damage'}"/></group>
+			</search>
+		</field>
+	</record>
+
+	<record id="action_mech" model="ir.actions.act_window">
+	  <field name="name">Garage</field>
+	  <field name="type">ir.actions.act_window</field>
+	  <field name="res_model">mech.details</field>
+	  <field name="view_type">form</field>
+	  <field name="view_mode">tree,form,kanban</field>
+	  <field name="help" type="html">
+	   <p class="oe_view_nocontent_create"> </p>
+	   <p></p>
+	  </field>
+	</record>
+	<act_window id="id_wizard_action"
+	domain="[('id','in',active_ids)]"
+	view_id='view_change_parts'
+    name="Test"
+    src_model="mech.details"
+    res_model="change.parts"
+    view_type="form" view_mode="form"
+    target="new"/>
+    
+
+
+	
+	
+	<menuitem action="action_mech" id="menu_carservice_module1" parent="sub_menu_carservice_parts_garage" name="Garage" sequence="14"/>
+               
+
+
+
+
+
+
+</odoo>

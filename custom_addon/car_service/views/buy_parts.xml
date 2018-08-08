@@ -1,0 +1,101 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<odoo>
+	<record id="view_parts1_module_tree" model="ir.ui.view">
+	   <field name="name">parts.add.tree</field>
+	   <field name="model">parts.add</field>
+	   <field name="type">tree</field>
+	   <field name="priority" eval="13"/>
+	   <field name="priority">1</field>
+	   <field name="arch" type="xml">
+	    <tree string=" parts">
+	     <field name="buy" />
+		 <field name="seller1"/>
+	     <field name="name"/>
+	     <field name="email"/>
+	     
+	     
+	     
+	     
+	    </tree>
+	   </field>
+    </record> 
+
+
+    <record id="view_parts1_module_form" model="ir.ui.view">
+	   <field name="name">parts.add.form</field>
+	   <field name="model">parts.add</field>
+	   <field name="arch" type="xml">
+	    <form string="parts" class="parts_detail">
+	    <header>
+	    	 <button name="confirm_buy" type='object' string='confirm order' class="oe_highlight"/>
+
+	    	 <field name="state" widget="statusbar" statusbar_visible="not,done"/>
+
+	    </header>
+	     <sheet>     
+		<group>
+		  <group>
+		   <field name="buy"  attrs="{'readonly': [('state', '=', 'done')]}"/>
+		   <field name="seller1"  attrs="{'readonly': [('state', '=', 'done')]}"/>
+
+		  </group>
+		  <group>
+
+		   <field name='name'  attrs="{'readonly': [('state', '=', 'done')]}"/>
+		   <field name="email"  attrs="{'readonly': [('state', '=', 'done')]}"/>
+		   <field name="phone"  attrs="{'readonly': [('state', '=', 'done')]}"/>
+		   </group>
+
+	     
+		   
+	     
+		</group>
+		
+	     </sheet> 
+	    </form> 
+	   </field> 
+	</record> 
+
+
+	<record id="action_parts3" model="ir.actions.act_window">
+	  <field name="name">Buy</field>
+	  <field name="type">ir.actions.act_window</field>
+	  <field name="res_model">parts.add</field>
+	  <field name="view_type">form</field>
+	  <field name="view_mode">tree,form,kanban</field>
+	  <field name="domain">[('buy','=','yes')]</field>
+	   <field eval="False" name="view_id"/>
+	  <field name="help" type="html">
+	   <p class="oe_view_nocontent_create"> </p>
+	   <p></p>
+	  </field>
+	</record> 
+
+
+
+	<record id="action_parts_tree1_view1" model="ir.actions.act_window.view">
+		<field eval="1" name="sequence"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="view_parts1_module_tree"/>
+
+		<field name="act_window_id" ref="action_parts3"/>
+	</record>
+
+
+
+
+	
+	
+	<record id="action_parts_form_view1" model="ir.actions.act_window.view">
+		<field eval="2" name="sequence"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="view_parts1_module_form"/>
+		<field name="act_window_id" ref="action_parts3"/>
+	</record>
+
+
+	Car Service
+	<menuitem action="action_parts3" id="menu_carservice_module_parts" parent="sub_menu_carservice_parts" name="Buy" sequence="22"/>
+	/>
+
+</odoo>

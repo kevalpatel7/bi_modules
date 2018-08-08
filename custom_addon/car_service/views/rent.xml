@@ -1,0 +1,121 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<odoo>
+
+	<record id="view_car_rent_tree" model="ir.ui.view">
+	   <field name="name">car.rent.tree</field>
+	   <field name="model">car.rent</field>
+	   <field name="priority">2</field>
+	   <field name="arch" type="xml">
+	    <tree string="RENT">
+	     <field name="name"/>
+	     <field name='rent_seq'/>
+	      <field name="customer"/>
+	     <field name="rent_price"/>
+	     <field name="Date"/>
+	     <field name="Days"/>
+	     <field name="number"/>
+	     <field name="payment" sum="Advance"/>
+	     <field name='remaining' sum="Bill"/>
+	     <field name='return_date'/>
+
+			     
+	    </tree>
+	   </field>
+        </record>
+        <record id="seq_rent" model="ir.sequence">
+            <field name="name">rent_sequencer</field>
+            <field name="code">car.rent</field>
+            <field name="prefix">RE</field>
+            <field name="padding">3</field>
+        </record>
+
+
+
+	<record id="view_car_rent_form" model="ir.ui.view">
+	   <field name="name">car.rent.form</field>
+	   <field name="model">car.rent</field>
+	   <field name="priority">2</field>
+	   <field name="arch" type="xml">
+	    <form string="RENT">
+	    	<header>
+	    			<button name="%(action_view_change_pick_city)d" string="Change Pick Up City"
+                        type="action" class="btn-primary"/>
+                       <button name="new_car" string="New Car" type="object" class='btn-primary'/>
+                       <button name="confirm_rent" string="Book" type='object' class="btn-primary" attrs="{'invisible':[('state','=','done')]}"/>
+                       <field name="state" widget="statusbar" statusbar_visible="not,done"/>
+	    		</header>
+
+	    	<sheet>
+
+	    		<h1><field name="customer" attrs="{'readonly':[('state','=','done')]}"/>
+	    		<field name='rent_seq'/></h1>
+
+	    		<group col='4' clospan='2'>
+			     
+			     	<field name="Date" attrs="{'readonly':[('state','=','done')]}"/>
+			     	<field name="Days" attrs="{'readonly':[('state','=','done')]}"/>
+			    </group>
+		    	<group col='4' clospan='2'>
+			    	<field name="name" attrs="{'readonly':[('state','=','done')]}"/>
+			    	<field name='Model_car' attrs="{'readonly':[('state','=','done')]}"/> 
+			    </group>
+			    <group >
+			   	 	<group> <field name="rent_price" attrs="{'readonly':[('state','=','done')]}"/></group>
+			   	 	<group><field name='cityd' attrs="{'readonly':[('state','=','done')]}"/></group>
+
+			     <!-- <field name='Model_bike' attrs="{'invisible':[('name','=','car')]}"/> -->
+			 	
+			 	</group>
+			     
+			 	
+			     <group col='4' clospan='2'>
+			      	 <field name='return_date' attrs="{'readonly':[('state','=','done')]}"/>
+			    	 <field name="number" attrs="{'readonly':[('state','=','done')]}"/>
+			     </group>
+			     
+			 	
+
+		<notebook>
+			<page string='Customer details'>
+				<group>
+					<group><field name='city' attrs="{'readonly':[('state','=','done')]}"/></group>
+					<group><field name='licence'/></group>
+			 		<group><field name='phone' attrs="{'readonly':[('state','=','done')]}"/></group>
+
+				</group>
+			</page>
+			<page string='Bill'>
+				<group>
+					<group> <field name='remaining' attrs="{'readonly':[('state','=','done')]}"/></group>
+					<group><field name="payment"/></group>
+				</group>
+			</page>
+		</notebook>
+
+	     </sheet>
+			     
+	    </form>
+	   </field>
+        </record>
+
+
+
+        <record id="action_rent" model="ir.actions.act_window">
+	  <field name="name">RENT</field>
+	  <field name="type">ir.actions.act_window</field>
+	  <field name="res_model">car.rent</field>
+	  <field name="view_type">form</field>
+	  <field name="view_mode">tree,form,kanban</field>
+	  <field name="help" type="html">
+	   <p class="oe_view_nocontent_create"> </p>
+	   <p></p>
+	  </field>
+	</record>
+
+
+	<menuitem id="main_menu_carservice" name="Car Service" sequence="25" />
+	<menuitem id="sub_menu_carservice_rent" name="Rent"  parent="main_menu_carservice" sequence="1"/>
+	<menuitem action="action_rent" id="menu_rent" parent="sub_menu_carservice_rent" name="Rent" sequence="21"/>
+
+
+</odoo>

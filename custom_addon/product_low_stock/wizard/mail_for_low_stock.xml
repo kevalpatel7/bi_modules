@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+	<record id="view_mail_low_stock" model="ir.ui.view">
+            <field name="name">Mail For Low Stock</field>
+            <field name="model">mail.low.stock</field>
+            <field name="arch" type="xml">
+                <form string="Low stock Email">
+                    <p class="oe_grey">
+                        
+                    </p>
+                    <group>
+                  <field name='name_to'/>
+                  <field name="name_from"/>
+                  <field name='mail_body'/>
+                    
+               
+                    </group>
+                    <footer>
+                    	<button name="send_mail_stock_low" string="Send" type="object"  class="btn-primary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_mail_low_stock" model="ir.actions.act_window">
+            <field name="name">Email For Low Stock</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mail.low.stock</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+</odoo>

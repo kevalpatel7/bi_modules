@@ -1,0 +1,42 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_respartner_form_inherit_car" model="ir.ui.view">
+			<field name="name">res.partner.form.car_service.module</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='phone']" position="after">
+					<field name="Aadhar_id" string="Adhar id"/>
+					
+				</xpath>
+				
+			</field>
+
+			
+		</record>
+		<record id="view_respartner_tree_inherit_car" model="ir.ui.view">
+			<field name="name">res.partner.tree.car_service.module</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_tree"/>
+
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='phone']" position="after">
+					<field name="Aadhar_id" string="Adhar id" /> 
+				</xpath>
+			</field>
+
+
+		</record>
+
+
+
+
+
+
+	</data>
+
+
+
+</odoo>

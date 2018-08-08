@@ -1,0 +1,85 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<odoo>
+
+	<record id="view_car_rereceive_rereceive_tree" model="ir.ui.view">
+	   <field name="name">car.receive.tree</field>
+	   <field name="model">car.receive</field>
+	   <field name="priority">2</field>
+	   <field name="arch" type="xml">
+	    <tree string="car_rereceive">
+	     <field name="token"/>
+	     <field  name="vehicle"/>
+	     <field name='customer'/>
+	     <field name="return_date"/>
+	     <field name='bill'/>
+	     <field name='damage'/>
+	     <field name='fine'/>
+	     <field name='today'/>
+	     
+			     
+	    </tree>
+	   </field>
+        </record>
+
+
+        <record id="view_car_rereceive_form" model="ir.ui.view">
+	   <field name="name">car.receive.form</field>
+	   <field name="model">car.receive</field>
+	   <field name="priority">2</field>
+	   <field name="arch" type="xml">
+	    <form string="Receive">
+	    	<header>
+	    		 <button name="receive_car" string="Receive" type="object" class='"oe_inline oe_stat_button' icon='fa-star'
+	    		 	attrs="{'invisible':[('state','=','done')]}">
+	    		 		<!-- <span><field name='bill'/></span> -->
+	    		 	</button>
+	    		 <field name="state" widget="statusbar" statusbar_visible="not,done"/>
+	    	</header>
+
+	    	<sheet>
+		    	<group col='4' clospan='2'>
+			    <field name="token" attrs="{'readonly':[('state','=','done')]}"/>
+			    <field name='customer' attrs="{'readonly':[('state','=','done')]}"/>
+			     <field name='vehicle' attrs="{'readonly':[('state','=','done')]}"/>
+			     <field name="return_date" attrs="{'readonly':[('state','=','done')]}"/>
+			     <field name='fine' attrs="{'readonly':[('state','=','done')]}"/>
+			     <field name='today' attrs="{'readonly':[('state','=','done')]}"/>
+				</group>
+				<group>
+				<group><field name='bill' attrs="{'readonly':[('state','=','done')]}"/></group>
+			     <group><field name='damage' attrs="{'readonly':[('state','=','done')]}"/></group>
+			     <group><field name="fine_damage" attrs="{'readonly':[('state','=','done')]}"/></group>
+			    </group>
+			    <notebook>
+			    	<page string='Damage parts' attrs="{'invisible':[('damage','!=',True)]}">
+			    		<field name='parts_damage'>
+			    			<tree editable='bottom' >
+			    				<field name='name' />
+			    				<field name='price'/>
+			    			</tree>
+			    		</field>
+
+			    	</page>
+			    </notebook>
+			     
+			     
+	     </sheet>
+	 </form>
+	</field>
+</record>
+	  <record id="action_car_rereceive" model="ir.actions.act_window">
+	  <field name="name">Receive vehicle</field>
+	  <field name="type">ir.actions.act_window</field>
+	  <field name="res_model">car.receive</field>
+	  <field name="view_type">form</field>
+	  <field name="view_mode">tree,form,kanban</field>
+	  <field name="help" type="html">
+	   <p class="oe_view_nocontent_create"> </p>
+	   <p></p>
+	  </field>
+	</record>
+	
+	<menuitem action="action_car_rereceive" id="menu_car_rereceive" parent="sub_menu_carservice_rent" name=" Receive Vehicle" sequence="31"/>
+
+
+</odoo>

@@ -1,0 +1,62 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<odoo>
+
+	<record id="view_car_tree" model="ir.ui.view">
+	   <field name="name">car.product.tree</field>
+	   <field name="model">car.product</field>
+	   <field name="priority">2</field>
+	   <field name="arch" type="xml">
+	    <tree string="Car">
+	     <field name="name"/>
+	     <field  name="type_id"/>
+	     <field name="rent"/>
+	     <field name='stock'/>
+	     
+			     
+	    </tree>
+	   </field>
+        </record>
+
+
+        <record id="view_car_form" model="ir.ui.view">
+	   <field name="name">car.product.form</field>
+	   <field name="model">car.product</field>
+	   <field name="priority">2</field>
+	   <field name="arch" type="xml">
+	    <form string="RENT">
+	    	 <header>
+	    	 	<button name="action_update" type="object" string="Update stock" class='btn-primary'/>
+	    	 </header>
+
+	    	<sheet>
+		    	<group col='4' clospan='2'>
+			    <field name="name"/>
+			     <field name='type_id'/>
+			     <field name="rent"/>
+				</group>
+				<group>
+				<group><field name='stock'/></group>
+			     <group><field name='num_plate'/></group>
+			    </group>
+			     
+			     
+	     </sheet>
+	 </form>
+	</field>
+</record>
+	  <record id="action_car" model="ir.actions.act_window">
+	  <field name="name">Vehicle</field>
+	  <field name="type">ir.actions.act_window</field>
+	  <field name="res_model">car.product</field>
+	  <field name="view_type">form</field>
+	  <field name="view_mode">tree,form,kanban</field>
+	  <field name="help" type="html">
+	   <p class="oe_view_nocontent_create"> </p>
+	   <p></p>
+	  </field>
+	</record>
+	
+	<menuitem action="action_car" id="menu_car" parent="sub_menu_carservice_rent" name="Vehicle" sequence="29"/>
+
+
+</odoo>
