@@ -42,56 +42,57 @@ class ResConfigSettings(models.TransientModel):
 		res_ids=[]
 		for ids in res:
 			res_ids.append(ids.id)
-		new_record=max(res_ids)
-		for data in res:
-			if data.id == new_record:
-				products_dlt = [(2,dlt.id,0)for dlt in data.low_stock_products]
-				
-
-				data.low_stock_products = products_dlt
-
-				if data.notification_base == 'on_hand':
-					if data.notification_products == 'for_all':
-						res = self.env['product.product'].search([('qty_available','<',data.min_quantity)])
-						
-						#print "for all ===================on hand",res
-						for product in res:
-							products_list.append([0,0,{'name':product.name,
-													'limit_quantity':data.min_quantity,
-													'stock_quantity':product.qty_available}])
-			
+		if res_ids:
+			new_record=max(res_ids)
+			for data in res:
+				if data.id == new_record:
+					products_dlt = [(2,dlt.id,0)for dlt in data.low_stock_products]
 					
-					if data.notification_products == 'fore_product':
-						#print self
-						res = self.env['product.product'].search([])
-						#print"for product================hand==========",res
 
-						for product in res:
-							if product.qty_available < product.min_quantity:
+					data.low_stock_products = products_dlt
+
+					if data.notification_base == 'on_hand':
+						if data.notification_products == 'for_all':
+							res = self.env['product.product'].search([('qty_available','<',data.min_quantity)])
+							
+							#print "for all ===================on hand",res
+							for product in res:
 								products_list.append([0,0,{'name':product.name,
-															'limit_quantity':product.min_quantity,
+														'limit_quantity':data.min_quantity,
 														'stock_quantity':product.qty_available}])
+				
+						
+						if data.notification_products == 'fore_product':
+							#print self
+							res = self.env['product.product'].search([])
+							#print"for product================hand==========",res
+
+							for product in res:
+								if product.qty_available < product.min_quantity:
+									products_list.append([0,0,{'name':product.name,
+																'limit_quantity':product.min_quantity,
+															'stock_quantity':product.qty_available}])
 
 
-				if data.notification_base=='fore_cast':
-					if data.notification_products=='for_all':
-						res = self.env['product.product'].search([('virtual_available','<',data.min_quantity)])
-						for product in res:
-							products_list.append([0,0,{'name':product.name,
-													'stock_quantity':product.virtual_available}])
-					if data.notification_products == 'fore_product':
-						res = self.env['product.product'].search([])
-
-						for product in res:
-							if product.virtual_available < product.min_quantity:
+					if data.notification_base=='fore_cast':
+						if data.notification_products=='for_all':
+							res = self.env['product.product'].search([('virtual_available','<',data.min_quantity)])
+							for product in res:
 								products_list.append([0,0,{'name':product.name,
-															'limit_quantity':product.min_quantity,
 														'stock_quantity':product.virtual_available}])
+						if data.notification_products == 'fore_product':
+							res = self.env['product.product'].search([])
 
-					
+							for product in res:
+								if product.virtual_available < product.min_quantity:
+									products_list.append([0,0,{'name':product.name,
+																'limit_quantity':product.min_quantity,
+															'stock_quantity':product.virtual_available}])
 
-				print( "222222222222222222222222222222222222222222222",products_list)
-				data.low_stock_products = products_list
+						
+
+					print( "222222222222222222222222222222222222222222222",products_list)
+					data.low_stock_products = products_list
 				#print "33333333333333333333333333333333333333"
 		return 
 
@@ -110,24 +111,25 @@ class ResConfigSettings(models.TransientModel):
 
 	
 	def action_low_stock_send(self):
-		
+		self.action_list_products_()
 		#print "before send===================================="
 		res = self.env['res.config.settings'].search([])
 		#print "resss====================================",res
 		res_ids=[]
 		for ids in res:
 			res_ids.append(ids.id)
-		mail_id=max(res_ids)
+		if res_ids:
+			mail_id=max(res_ids)
 		# for data in res:
 		# 	if data.id == mail_id:
 		# 		data.action_list_products_()
 		
-		
-		template_id = self.env.ref('bi_product_low_stock_v11.low_stock_email_template')
-		#print "template_id========================",template_id
-		#print "self_id============================",mail_id
-		send = template_id.send_mail(mail_id, force_send=True)
-		
+			
+			template_id = self.env.ref('bi_product_low_stock_v11.low_stock_email_template')
+			#print "template_id========================",template_id
+			#print "self_id============================",mail_id
+			send = template_id.send_mail(mail_id, force_send=True)
+			
 		print ("3333333333333333333333333333333333333333333333333333333333333333")
 
 		
@@ -137,11 +139,12 @@ class ResConfigSettings(models.TransientModel):
 	def get_values(self):
 		print('get====================================================')
 		res = super(ResConfigSettings,self).get_values()
+		print ('super=======================================')
 		notification_base = self.env['ir.config_parameter'].sudo().get_param('bi_product_low_stock.notification_base')
 		notification_products = self.env['ir.config_parameter'].sudo().get_param('bi_product_low_stock.notification_products')
-		min_quantity = float(self.env['ir.config_parameter'].sudo().get_param('bi_product_low_stock.min_quantity'))
-		notification_user = literal_eval(self.env['ir.config_parameter'].sudo().get_param('bi_product_low_stock.notification_user'))
-		email_user = self.env['ir.config_parameter'].sudo().get_param('bi_product_low_stock.email_user')
+		min_quantity = float(self.env['ir.config_parameter'].sudo().get_param('bi_product_low_stock.min_quantity',default=0))
+		notification_user = literal_eval(self.env['ir.config_parameter'].sudo().get_param('bi_product_low_stock.notification_user',default='False'))
+		email_user = self.env['ir.config_parameter'].sudo().get_param('bi_product_low_stock.email_user',default='False')
 		print ("userrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
 		res.update(
 			notification_base = notification_base,

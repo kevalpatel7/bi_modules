@@ -11,7 +11,7 @@
 	""",
 	'author':'Browseinfo',
 	'website': 'https://www.browseinfo.in',
-	'depends': ['base','sale','product','stock','mail','contacts'],
+	'depends': ['base','sale','product','stock','mail','contacts','sale_crm'],
 	'data': [
 	'view/product_product_view.xml',
 	'view/email_templete.xml',

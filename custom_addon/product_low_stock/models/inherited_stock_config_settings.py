@@ -38,58 +38,60 @@ class StockSettings(models.TransientModel):
 		res_ids=[]
 		for ids in res:
 			res_ids.append(ids.id)
-		new_record=max(res_ids)
+		if res_ids:
+		
+			new_record=max(res_ids)
 		
 		
-		for data in res:
-			if data.id == new_record:
-				products_dlt = [(2,dlt.id,0)for dlt in data.low_stock_products]
-				
-
-				data.low_stock_products = products_dlt
-				products_list=[]
-				if data.notification_base == 'on_hand':
-					if data.notification_products == 'for_all':
-						res = self.env['product.product'].search([('qty_available','<',data.min_quantity)])
-						
-						print "for all ===================on hand",res
-						for product in res:
-							products_list.append([0,0,{'name':product.name,
-													'limit_quantity':data.min_quantity,
-													'stock_quantity':product.qty_available}])
-			
+			for data in res:
+				if data.id == new_record:
+					products_dlt = [(2,dlt.id,0)for dlt in data.low_stock_products]
 					
-					if data.notification_products == 'fore_product':
-						#print self
-						res = self.env['product.product'].search([])
-						#print"for product================hand==========",res
 
-						for product in res:
-							if product.qty_available < product.min_quantity:
+					data.low_stock_products = products_dlt
+					products_list=[]
+					if data.notification_base == 'on_hand':
+						if data.notification_products == 'for_all':
+							res = self.env['product.product'].search([('qty_available','<',data.min_quantity)])
+							
+							#print "for all ===================on hand",res
+							for product in res:
 								products_list.append([0,0,{'name':product.name,
-															'limit_quantity':product.min_quantity,
+														'limit_quantity':data.min_quantity,
 														'stock_quantity':product.qty_available}])
+				
+						
+						if data.notification_products == 'fore_product':
+							#print self
+							res = self.env['product.product'].search([])
+							#print"for product================hand==========",res
+
+							for product in res:
+								if product.qty_available < product.min_quantity:
+									products_list.append([0,0,{'name':product.name,
+																'limit_quantity':product.min_quantity,
+															'stock_quantity':product.qty_available}])
 
 
-				if data.notification_base=='fore_cast':
-					if data.notification_products=='for_all':
-						res = self.env['product.product'].search([('virtual_available','<',data.min_quantity)])
-						for product in res:
-							products_list.append([0,0,{'name':product.name,
-													'stock_quantity':product.virtual_available}])
-					if data.notification_products == 'fore_product':
-						res = self.env['product.product'].search([])
-
-						for product in res:
-							if product.virtual_available < product.min_quantity:
+					if data.notification_base=='fore_cast':
+						if data.notification_products=='for_all':
+							res = self.env['product.product'].search([('virtual_available','<',data.min_quantity)])
+							for product in res:
 								products_list.append([0,0,{'name':product.name,
-															'limit_quantity':product.min_quantity,
 														'stock_quantity':product.virtual_available}])
+						if data.notification_products == 'fore_product':
+							res = self.env['product.product'].search([])
 
-					
+							for product in res:
+								if product.virtual_available < product.min_quantity:
+									products_list.append([0,0,{'name':product.name,
+																'limit_quantity':product.min_quantity,
+															'stock_quantity':product.virtual_available}])
 
-				#print "222222222222222222222222222222222222222222222",products_list
-				data.low_stock_products = products_list
+						
+
+					#print "222222222222222222222222222222222222222222222",products_list
+					data.low_stock_products = products_list
 				#print "33333333333333333333333333333333333333"
 		return 
 
@@ -108,14 +110,15 @@ class StockSettings(models.TransientModel):
 
 	
 	def action_low_stock_send(self):
-		
+		self.action_list_products_()
 		#print "before send===================================="
 		res = self.env['stock.config.settings'].search([])
 		print "resss====================================",res
 		res_ids=[]
 		for ids in res:
 			res_ids.append(ids.id)
-		mail_id=max(res_ids)
+		if res_ids:
+			mail_id=max(res_ids)
 		
 		
 		template_id = self.env.ref('product_low_stock.low_stock_email_template')
